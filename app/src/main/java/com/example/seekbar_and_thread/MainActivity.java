@@ -3,6 +3,8 @@ package com.example.seekbar_and_thread;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     SeekBar seekBar;
     int maxCounter=100;
+   // myHandler handle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         textView=findViewById(R.id.textViewCounter);
         seekBar=findViewById(R.id.seekBar);
         seekBar.setMax(maxCounter);
+        //handle=new myHandler();
 
 
     }
@@ -49,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
                             textView.setText("Counter="+counterUp);
                         }
                     });
+                   /* Message msg=handle.obtainMessage();
+                    Bundle b=new Bundle();
+                    b.putInt("counter",counterUp);
+                    msg.setData(b);
+                    handle.sendMessage(msg);*/
                     counterUp=counterUp+1;
                     try {
                         Thread.sleep(1000);
@@ -58,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             }
+        }
+    }
+    class myHandler extends Handler{
+        public  void handleMessage(Message msg){
+            int count=msg.getData().getInt("counter");
+            seekBar.setProgress(count);
+            textView.setText("Counter="+count);
         }
     }
 }
