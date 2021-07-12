@@ -1,0 +1,2 @@
+rootProject.name = "seekbar_and_thread"
+include ':app'
